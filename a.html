@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aranya — Ayurvedic Haircare</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --parchment: #EDE5D4;
+    --forest: #1C3A2A;
+    --forest-mid: #2E5940;
+    --forest-light: #4A7A5E;
+    --gold: #B8965A;
+    --gold-light: #D4AF7A;
+    --charcoal: #2C2C2C;
+    --warm-gray: #7A7060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(28,58,42,0.12);
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--forest); letter-spacing: 3px;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--forest);
+    font-size: 12px; font-weight: 400; letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative; padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--forest); color: var(--cream) !important;
+    padding: 10px 24px !important; letter-spacing: 2px;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--forest-mid); }
+
+  /* ── HERO ── */
+  .hero {
+    /* Removed min-height: 100vh so it wraps the content tightly */
+    display: grid; 
+    grid-template-columns: 40% 60%;
+    padding-top: 100px; /* Keeps space for your sticky navbar */
+    padding-bottom: 40px; /* Adds a clean border at the bottom */
+    position: relative; 
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(184,150,90,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-left {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0px 0px 0px 0px; /* Reduced top and bottom padding from 80px to 40px */
+    position: relative;
+  }
+  .product-landscape-image {
+    width: 95%;
+    max-width: 750px;
+    max-height: 400px;
+    height: auto;
+    aspect-ratio: auto;          /* lets the video's native ratio breathe */
+    object-fit: contain;         /* never stretches or crops the video */
+    border-radius: 16px;
+    box-shadow: 0 40px 100px rgba(28,58,42,0.2), 0 10px 30px rgba(0,0,0,0.1);
+    animation: float 6s ease-in-out infinite;
+    display: block;
+    background: transparent;     /* no black box while loading */
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 400; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--gold);
+  }
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 86px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--forest);
+    margin-bottom: 32px;
+  }
+  .hero-headline em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 14px; font-weight: 300; line-height: 1.8;
+    color: var(--warm-gray); max-width: 400px;
+    margin-bottom: 48px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--forest); color: var(--cream);
+    padding: 16px 40px; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; font-weight: 400;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--forest-mid); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--forest); font-size: 12px; font-weight: 400;
+    letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--forest);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--parchment) 0%, #DDD4C0 100%);
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: 
+      radial-gradient(circle at 30% 30%, rgba(28,58,42,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(184,150,90,0.06) 0%, transparent 50%);
+  }
+  .hero-product-showcase {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 24px; 
+    padding: 20px; /* Much smaller margins */
+    width: 100%; /* Ensures it stretches out */
+  }
+  .product-bag {
+    width: 280px; height: 360px;
+    background: linear-gradient(145deg, #F0EBE0, #E8E0CE);
+    border-radius: 20px 20px 16px 16px;
+    border: 1px solid rgba(28,58,42,0.15);
+    box-shadow: 0 30px 80px rgba(28,58,42,0.2), 0 8px 24px rgba(0,0,0,0.08);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 32px 28px; gap: 12px;
+    position: relative; overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  
+  .product-bag-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600; color: var(--forest);
+    letter-spacing: 4px; margin-top: 20px;
+  }
+  .product-bag-sub {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+  .product-bag-divider {
+    width: 80%; height: 1px; background: rgba(28,58,42,0.15);
+    margin: 4px 0;
+  }
+  .product-bag-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; font-weight: 500; color: var(--forest);
+    text-align: center; line-height: 1.4; letter-spacing: 1px;
+  }
+  .product-bag-type {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+  .product-bag-banner {
+    background: var(--forest); color: var(--cream);
+    padding: 6px 16px; font-size: 8px;
+    letter-spacing: 2px; text-transform: uppercase;
+    width: 100%; text-align: center; margin: 4px 0;
+  }
+  .product-bag-ingredients {
+    font-size: 9px; letter-spacing: 1px; color: var(--forest);
+    text-align: center; line-height: 1.8;
+  }
+  .product-bag-footer {
+    font-size: 9px; color: var(--warm-gray); letter-spacing: 1px;
+  }
+  .hero-badge {
+    display: flex; gap: 20px;
+  }
+  .badge {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    background: rgba(245,240,232,0.7);
+    border: 1px solid rgba(28,58,42,0.12);
+    padding: 12px 18px; border-radius: 4px;
+  }
+  .badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 300; color: var(--forest);
+  }
+  .badge-label {
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-gray); text-align: center;
+  }
+
+  /* Decorative botanical lines */
+  .botanical-line {
+    position: absolute; opacity: 0.08;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 80px; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 400; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300; line-height: 1.1;
+    color: var(--forest);
+  }
+
+  /* ── PRODUCT ── */
+  #product { background: var(--parchment); }
+  .product-grid {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; 
+    align-items: start; /* Snaps both columns to the very top */
+  }
+  .product-visual {
+    position: relative;
+  }
+  .product-card-large {
+    width: 100%;
+    background: linear-gradient(145deg, #F0EBE0, #E4DBCA);
+    border-radius: 24px;
+    border: 1px solid rgba(28,58,42,0.12);
+    box-shadow: 0 40px 100px rgba(28,58,42,0.15);
+    padding: 60px 48px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; position: relative; overflow: hidden;
+  }
+  .product-card-large::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(184,150,90,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .pcl-logo { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--forest); letter-spacing: 6px; }
+  .pcl-sub { font-size: 10px; letter-spacing: 3px; color: var(--warm-gray); text-transform: uppercase; }
+  .pcl-rule { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .pcl-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--forest); text-align: center; letter-spacing: 1px; }
+  .pcl-banner { background: var(--forest); color: var(--cream); padding: 8px 32px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
+  .pcl-ings { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .ing-chip {
+    border: 1px solid rgba(28,58,42,0.2); padding: 4px 12px;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--forest);
+  }
+  .pcl-weight { font-size: 32px; font-family: 'Cormorant Garamond', serif; color: var(--warm-gray); }
+  .product-floater {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--forest); color: var(--cream);
+    width: 90px; height: 90px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 8px; letter-spacing: 1.5px; text-align: center; text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .product-info { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 32px; 
+    /* Make sure there is NO margin-top here anymore */
+  }
+  .product-info .section-title { margin-bottom: 8px; }
+  .product-desc {
+    font-size: 15px; font-weight: 300; line-height: 1.9;
+    color: var(--warm-gray);
+  }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .info-item {
+    padding: 20px;
+    border: 1px solid rgba(28,58,42,0.12);
+    background: rgba(245,240,232,0.5);
+  }
+  .info-item h4 {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .info-item p {
+    font-size: 13px; font-weight: 300; color: var(--charcoal); line-height: 1.6;
+  }
+  .ingredients-list {
+    display: grid; grid-template-columns: repeat(5,1fr); gap: 16px;
+    margin-top: 16px;
+  }
+  .ingredient-item {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 16px 8px;
+    background: rgba(245,240,232,0.8);
+    border: 1px solid rgba(28,58,42,0.08);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .ingredient-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(28,58,42,0.08);
+  }
+  .ingredient-icon { font-size: 24px; }
+  .ingredient-name {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--forest); text-align: center;
+  }
+
+  /* ── PROMISES ── */
+  #promises { background: var(--forest); }
+  #promises .section-eyebrow { color: var(--gold-light); }
+  #promises .section-eyebrow::before { background: var(--gold-light); }
+  #promises .section-title { color: var(--cream); }
+  .promises-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+    margin-top: 60px;
+  }
+  .promise-card {
+    background: rgba(255,255,255,0.04);
+    padding: 48px 32px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column; gap: 16px;
+    transition: background 0.3s;
+  }
+  .promise-card:hover { background: rgba(255,255,255,0.07); }
+  .promise-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(184,150,90,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--gold-light);
+  }
+  .promise-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; color: var(--cream); font-weight: 400;
+  }
+  .promise-text {
+    font-size: 13px; font-weight: 300; color: rgba(245,240,232,0.6);
+    line-height: 1.8;
+  }
+  .without-section {
+    margin-top: 60px; padding-top: 60px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .without-title {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 24px;
+  }
+  .without-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+  .without-tag {
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(245,240,232,0.5);
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  }
+  .without-tag::before {
+    content: '✕'; color: var(--gold); font-size: 10px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--cream); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 100px; align-items: center; margin-top: 60px;
+  }
+  .about-visual {
+    position: relative;
+    height: 500px;
+  }
+  .about-box-main {
+    position: absolute; left: 0; top: 0;
+    width: 75%; height: 380px;
+    background: linear-gradient(145deg, var(--forest) 0%, var(--forest-mid) 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 40px; color: var(--cream);
+  }
+  .about-box-main-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; font-style: italic;
+    line-height: 1.4; margin-bottom: 16px;
+  }
+  .about-box-main-attr {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .about-box-accent {
+    position: absolute; right: 0; bottom: 0;
+    width: 55%; height: 200px;
+    background: var(--parchment);
+    border: 1px solid rgba(28,58,42,0.1);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    padding: 24px;
+  }
+  .about-box-accent-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 300; color: var(--forest); line-height: 1;
+  }
+  .about-box-accent-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-gray); text-align: center;
+  }
+  .about-content { display: flex; flex-direction: column; gap: 24px; }
+  .about-content p {
+    font-size: 15px; font-weight: 300; color: var(--warm-gray); line-height: 1.9;
+  }
+  .values-row { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .value-line {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid rgba(28,58,42,0.08);
+  }
+  .value-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: var(--gold); font-weight: 300;
+    min-width: 28px;
+  }
+  .value-text { font-size: 14px; font-weight: 300; color: var(--charcoal); line-height: 1.6; }
+  .value-text strong { font-weight: 500; color: var(--forest); }
+
+  /* ── HOW TO USE ── */
+  #howto { background: var(--parchment); }
+  .howto-steps {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 2px; margin-top: 60px;
+  }
+  .step-card {
+    background: rgba(245,240,232,0.8);
+    padding: 48px 36px;
+    border: 1px solid rgba(28,58,42,0.08);
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .product-bag {
+  width: 280px; 
+  height: auto; /* Lets the card expand to fit photo + text */
+  min-height: 400px;
+  background: linear-gradient(145deg, #F0EBE0, #E8E0CE);
+  border-radius: 20px 20px 16px 16px;
+  border: 1px solid rgba(28,58,42,0.15);
+  box-shadow: 0 30px 80px rgba(28,58,42,0.2), 0 8px 24px rgba(0,0,0,0.08);
+  display: flex; 
+  flex-direction: column;
+  position: relative; 
+  overflow: hidden; /* Ensures your photo gets the top rounded corners */
+  animation: float 6s ease-in-out infinite;
+}
+.product-bag-image {
+  width: 100%;
+  height: auto; /* Adjust this number to show more or less of your photo */
+  object-fit: cover;
+  display: block;
+}
+
+.product-bag-content {
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  padding: 24px 20px 28px 20px; 
+  gap: 10px;
+  flex-grow: 1;
+}
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(28,58,42,0.1);
+    border-color: rgba(28,58,42,0.2);
+  }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 300;
+    color: rgba(28,58,42,0.06);
+    position: absolute; top: 16px; right: 24px;
+    line-height: 1;
+  }
+  .step-icon {
+    width: 52px; height: 52px;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--cream);
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; color: var(--forest); font-weight: 400;
+  }
+  .step-desc { font-size: 14px; font-weight: 300; color: var(--warm-gray); line-height: 1.8; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--cream); }
+  .contact-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start; margin-top: 60px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-info p {
+    font-size: 15px; font-weight: 300; color: var(--warm-gray); line-height: 1.9;
+  }
+  .contact-detail-grid { display: flex; flex-direction: column; gap: 20px; }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 20px;
+    border: 1px solid rgba(28,58,42,0.1);
+    background: var(--parchment);
+    transition: all 0.3s;
+  }
+  .contact-detail:hover { border-color: var(--gold); }
+  .contact-icon {
+    width: 40px; height: 40px; min-width: 40px;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--cream);
+  }
+  .contact-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .contact-value {
+    font-size: 14px; font-weight: 300; color: var(--charcoal);
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; color: var(--forest); font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+  .form-input, .form-textarea {
+    background: var(--parchment);
+    border: 1px solid rgba(28,58,42,0.15);
+    padding: 14px 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: var(--charcoal);
+    outline: none; resize: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--forest); }
+  .form-textarea { height: 120px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 60px 80px 40px;
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 40px;
+  }
+  .footer-logo {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .footer-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 600; color: var(--cream);
+    letter-spacing: 6px;
+  }
+  .footer-logo-tagline {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+  .footer-links { display: flex; gap: 60px; }
+  .footer-link-group { display: flex; flex-direction: column; gap: 12px; }
+  .footer-link-heading {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 4px;
+  }
+  .footer-link-group a {
+    color: rgba(245,240,232,0.5); font-size: 13px; font-weight: 300;
+    text-decoration: none; transition: color 0.3s; letter-spacing: 1px;
+  }
+  .footer-link-group a:hover { color: var(--cream); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 11px; color: rgba(245,240,232,0.3); letter-spacing: 1px;
+  }
+  .footer-certifications {
+    display: flex; gap: 16px;
+  }
+  .cert-tag {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 6px 14px; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 400px; }
+    .hero-left { padding: 60px 24px 40px; }
+    .product-grid, .about-grid, .contact-layout { grid-template-columns: 1fr; }
+    .promises-grid { grid-template-columns: 1fr 1fr; }
+    .howto-steps { grid-template-columns: 1fr; }
+    .ingredients-list { grid-template-columns: repeat(3,1fr); }
+    footer { padding: 40px 24px 24px; }
+    .footer-top { flex-direction: column; gap: 40px; }
+    .footer-links { flex-wrap: wrap; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="C:\Users\VEER MANI TRIPATHI\Downloads\image-Picsart-BackgroundRemover.png" alt="Aranya Logo" style="width:38px;height:38px;object-fit:contain;">
+    <span class="nav-logo-text">ARANYA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#product">Product</a></li>
+    <li><a href="#promises">Our Promise</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#howto">How to Use</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Ayurvedic Haircare</div>
+    <h1 class="hero-headline">
+      Rooted Here.<br>
+      <em>Always</em><br>
+      Has Been.
+    </h1>
+    <p class="hero-sub">
+      We don't follow trends. We follow traditions. Reclaiming Indian haircare with time-tested ingredients and honest intent — because your roots deserve nothing less.
+    </p>
+    <div class="hero-actions">
+      <a href="#product" class="btn-primary">Explore Product</a>
+      <a href="#about" class="btn-ghost">Our Story →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-product-showcase">
+        <img
+          src="./img.jpeg"
+          class="product-landscape-image"
+          autoplay muted loop playsinline
+          aria-label="Aranya Product Video">
+    </img>
+      </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="product-grid" style="margin-top: 0;">
+    
+    <!-- LEFT COLUMN: Titles + Image -->
+    <div class="product-visual fade-up">
+      <div class="section-eyebrow fade-up" style="margin-bottom: 16px;">Our Product</div>
+      <h2 class="section-title fade-up" style="margin-bottom: 40px;">One Product.<br>Pure Intention.</h2>
+      
+      <!-- Make sure your image file name is correct here -->
+      <video
+        src="./mp_.mp4"
+        class="product-landscape-image"
+        autoplay muted loop playsinline
+        aria-label="Aranya Product Video">
+      </video>
+    </div>
+
+    <!-- RIGHT COLUMN: Text Details -->
+    <div class="product-info fade-up">
+      <div class="section-eyebrow">Nourishing Hair Cleanser</div>
+      <h3 class="section-title">Herbal Hair<br>Wash Powder</h3>
+      <p class="product-desc">
+        A gentle, effective powder cleanser rooted in Ayurvedic tradition. Made with five potent herbs that have been used for centuries across Indian households — now brought together in one honest formulation that cleanses, nourishes, and strengthens without compromise.
+      </p>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>Best For</h4>
+          <p>All hair types — dry, oily, normal, and chemically treated hair</p>
+        </div>
+        <div class="info-item">
+          <h4>Net Weight</h4>
+          <p>100 grams per pack</p>
+        </div>
+        <div class="info-item">
+          <h4>Key Benefits</h4>
+          <p>Strengthens roots · Reduces hairfall · Promotes healthy scalp</p>
+        </div>
+        <div class="info-item">
+          <h4>Storage</h4>
+          <p>Store in a cool, dry place. Keep away from moisture.</p>
+        </div>
+      </div>
+      
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:16px; margin-top:16px;">Key Ingredients</div>
+        <div class="ingredients-list">
+          <div class="ingredient-item">
+            <span class="ingredient-icon">🫐</span>
+            <span class="ingredient-name">Amla</span>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-icon">🌿</span>
+            <span class="ingredient-name">Shikakai</span>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-icon">🌰</span>
+            <span class="ingredient-name">Reetha</span>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-icon">🌺</span>
+            <span class="ingredient-name">Hibiscus</span>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-icon">🍃</span>
+            <span class="ingredient-name">Bhringraj</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- PROMISES -->
+<section id="promises">
+  <div class="section-eyebrow fade-up">Our Promise</div>
+  <h2 class="section-title fade-up" style="color:var(--cream)">Pure, Honest Care.<br>Nothing Less.</h2>
+  <div class="promises-grid fade-up">
+    <div class="promise-card">
+      <div class="promise-icon">🌿</div>
+      <div class="promise-title">100% Natural</div>
+      <p class="promise-text">Every ingredient is sourced directly from nature. No fillers, no synthetics, no compromise on purity.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-icon">📜</div>
+      <div class="promise-title">Ayurvedic Tradition</div>
+      <p class="promise-text">Our formulations are rooted in centuries of Ayurvedic wisdom, time-tested and proven by generations of Indian households.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-icon">🐰</div>
+      <div class="promise-title">Cruelty Free</div>
+      <p class="promise-text">No animal testing, ever. Our products are as kind to animals as they are to your hair and scalp.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-icon">✊</div>
+      <div class="promise-title">Clean & Honest</div>
+      <p class="promise-text">What you see on the label is exactly what's inside. Full transparency, no hidden chemicals, no misleading claims.</p>
+    </div>
+  </div>
+  <div class="without-section fade-up">
+    <div class="without-title">Made Without</div>
+    <div class="without-grid">
+      <span class="without-tag">Sulphates</span>
+      <span class="without-tag">Parabens</span>
+      <span class="without-tag">Silicones</span>
+      <span class="without-tag">Artificial Fragrance</span>
+      <span class="without-tag">Synthetic Colours</span>
+      <span class="without-tag">Harsh Chemicals</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-eyebrow fade-up">About Us</div>
+  <h2 class="section-title fade-up">Not Their Trend.<br>Our Tradition. Our Truth.</h2>
+  <div class="about-grid">
+    <div class="about-visual fade-up">
+      <div class="about-box-main">
+        <p class="about-box-main-quote">"We follow traditions, not trends. Rooted in nature. Inspired by tradition."</p>
+        <span class="about-box-main-attr">— The Aranya Promise</span>
+      </div>
+      <div class="about-box-accent">
+        <span class="about-box-accent-num">5000+</span>
+        <span class="about-box-accent-label">Years of<br>Ayurvedic Tradition</span>
+      </div>
+    </div>
+    <div class="about-content fade-up">
+      <p>
+        Aranya was born from a simple belief — that the wisdom of our grandmothers was never inferior to the promises of mass-market brands. In a world flooded with over-processed, synthetic, and disconnected haircare, we chose a different path.
+      </p>
+      <p>
+        We are a Chennai-based Ayurvedic haircare brand committed to bringing the time-tested knowledge of Indian botanical heritage to modern consumers — honestly, gently, and without compromise.
+      </p>
+      <div class="values-row">
+        <div class="value-line">
+          <span class="value-num">01</span>
+          <span class="value-text"><strong>Rooted in Authenticity</strong> — Every formulation is grounded in real Ayurvedic practice, not marketing gimmicks.</span>
+        </div>
+        <div class="value-line">
+          <span class="value-num">02</span>
+          <span class="value-text"><strong>Made in India</strong> — Proudly crafted in Chennai, Tamil Nadu, honouring the land that gave us these herbs.</span>
+        </div>
+        <div class="value-line">
+          <span class="value-num">03</span>
+          <span class="value-text"><strong>Honest Formulation</strong> — Gentle, effective, and free from anything unnecessary. Because your hair deserves the best.</span>
+        </div>
+        <div class="value-line">
+          <span class="value-num">04</span>
+          <span class="value-text"><strong>Sustainable Intent</strong> — Recycle. Reuse. Return to Nature. Our commitment to the earth is as real as our ingredients.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section id="howto">
+  <div class="section-eyebrow fade-up">How to Use</div>
+  <h2 class="section-title fade-up">Simple. Ritual. Effective.</h2>
+  <div class="howto-steps fade-up">
+    <div class="step-card">
+      <span class="step-num">01</span>
+      <div class="step-icon">🥣</div>
+      <div class="step-title">Take & Prepare</div>
+      <p class="step-desc">Take the required amount of Aranya Natural Hair Cleansing Powder in a bowl. Adjust quantity based on your hair length and thickness.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">02</span>
+      <div class="step-icon">💧</div>
+      <div class="step-title">Mix to a Paste</div>
+      <p class="step-desc">Add water gradually and mix well to form a smooth, lump-free paste. You can add rose water or coconut milk for added benefit.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">03</span>
+      <div class="step-icon">✨</div>
+      <div class="step-title">Apply & Rinse</div>
+      <p class="step-desc">Apply to wet hair and scalp. Massage gently to cleanse. Leave for 2–3 minutes, then rinse thoroughly with water.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-eyebrow fade-up">Contact Us</div>
+  <h2 class="section-title fade-up">We'd Love to Hear<br>From You</h2>
+  <div class="contact-layout">
+    <div class="contact-info fade-up">
+      <p>
+        Whether you have questions about our product, want to place a bulk order, or simply want to share your experience with Aranya — we're always here to listen.
+      </p>
+      <div class="contact-detail-grid">
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Our Address</div>
+            <div class="contact-value">Chennai, Tamil Nadu, India</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">Email Us</div>
+            <div class="contact-value">aranya.customercare@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🌿</div>
+          <div>
+            <div class="contact-label">Made In</div>
+            <div class="contact-value">India — Proudly & Authentically</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">⏰</div>
+          <div>
+            <div class="contact-label">Response Time</div>
+            <div class="contact-value">We reply within 24–48 hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form fade-up">
+      <div class="form-title">Send Us a Message</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input class="form-input" type="text" placeholder="How can we help?">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Message</label>
+        <textarea class="form-textarea" placeholder="Tell us more…"></textarea>
+      </div>
+      <button class="btn-primary" style="border:none;cursor:pointer;width:fit-content">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      <div class="footer-logo-name">ARANYA</div>
+      <div class="footer-logo-tagline">Rooted in Nature. Inspired by Tradition.</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-link-group">
+        <div class="footer-link-heading">Navigate</div>
+        <a href="#product">Product</a>
+        <a href="#promises">Our Promise</a>
+        <a href="#about">About Us</a>
+        <a href="#howto">How to Use</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-link-group">
+        <div class="footer-link-heading">Product</div>
+        <a href="#product">Nourishing Hair Cleanser</a>
+        <a href="#promises">Ingredients</a>
+        <a href="#howto">Usage Guide</a>
+      </div>
+      <div class="footer-link-group">
+        <div class="footer-link-heading">Connect</div>
+        <a href="mailto:aranya.customercare@gmail.com">aranya.customercare@gmail.com</a>
+        <a href="#">Chennai, Tamil Nadu, India</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Aranya Ayurvedic Haircare. All rights reserved. Made in India.</span>
+    <div class="footer-certifications">
+      <span class="cert-tag">100% Natural</span>
+      <span class="cert-tag">Cruelty Free</span>
+      <span class="cert-tag">Ayurvedic</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Nav shrink on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.padding = window.scrollY > 50 ? '12px 60px' : '20px 60px';
+  });
+</script>
+</body>
+</html>
